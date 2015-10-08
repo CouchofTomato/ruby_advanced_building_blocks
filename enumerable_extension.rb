@@ -72,8 +72,18 @@ module Enumerable
 		count
 	end
 
+	def my_map
+		return_array = []
+		self.my_each do |n|
+			temp = yield n
+			return_array << temp
+		end
+		return_array
+	end
+
 end
 
 test = [1,2,3,4,5,6,7,8,9,10]
-puts test.my_count
+puts test.my_map {|x| x * 2}.inspect
+puts test.inspect
 
