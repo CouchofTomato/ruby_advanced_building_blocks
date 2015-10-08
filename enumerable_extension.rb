@@ -57,10 +57,23 @@ module Enumerable
 		end
 		false
 	end
+
+	def my_count(*num)
+		count = self.length
+		if num.first != nil
+			count = 0
+			num2 = num.first
+			self.my_each do |n|
+				if num2 == n
+					count += 1
+				end
+			end
+		end
+		count
+	end
+
 end
 
-test = ["ant", "bear", "cat"]
-puts test.none? {|n| n.length >= 4}
-
-
+test = [1,2,3,4,5,6,7,8,9,10]
+puts test.my_count
 
