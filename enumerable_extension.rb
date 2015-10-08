@@ -81,9 +81,19 @@ module Enumerable
 		return_array
 	end
 
+	def my_inject(num = 0)
+		puts self.inspect
+		sum = num
+		self.my_each do |n|
+			sum += yield sum, n
+		end
+		sum
+	end
+
 end
 
-test = [1,2,3,4,5,6,7,8,9,10]
-puts test.my_map {|x| x * 2}.inspect
-puts test.inspect
+test = [1,2,3]
+test.my_inject {|sum, val| sum + val}
+
+
 
