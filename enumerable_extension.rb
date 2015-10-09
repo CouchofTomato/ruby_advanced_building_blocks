@@ -20,10 +20,7 @@ module Enumerable
 	def my_select
 		return_array = []
 		self.my_each do |n|
-			is_true = yield n
-			if is_true
-				return_array << n
-			end
+			result << n if yield n
 		end
 		return_array
 	end
@@ -59,21 +56,22 @@ module Enumerable
 	end
 
 	def my_count(*num)
-		count = self.length
-		if num.first != nil
-			count = 0
-			num2 = num.first
-			self.my_each do |n|
-				if num2 == n
-					count += 1
-				end
+		count = 0
+		unless block_given?			
+			if args.empty?
+				self.my_each { |item| count += 1 }
+			else			
+				self.my_each { |item| count += 1 if item == args[0] }
 			end
+		else
+			self.my_each { |item| count += 1 if yield item }
 		end
 		count
 	end
 
 	def my_map
 		return_array = []
+		return self unless block_given?
 		self.my_each do |n|
 			temp = yield n
 			return_array << temp
@@ -81,11 +79,12 @@ module Enumerable
 		return_array
 	end
 
-	def my_inject(num = 0)
-		puts self.inspect
-		sum = num
-		self.my_each do |n|
-			sum += yield sum, n
+	def my_inject(num = nil)
+		sum = num || self.first
+		unless block_given?
+			sum = self.to_a
+		else
+			self.to_a.my_each { |n|	sum = yield(sum, n) }
 		end
 		sum
 	end
@@ -93,7 +92,7 @@ module Enumerable
 end
 
 test = [1,2,3]
-test.my_inject {|sum, val| sum + val}
-
+puts test.my_inject {|sum, val| sum - val}
+puts test.inject {|sum, val| sum - val}
 
 
