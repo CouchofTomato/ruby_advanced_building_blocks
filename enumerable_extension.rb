@@ -35,9 +35,19 @@ module Enumerable
 		return true
 	end
 
+	def my_any?
+		if !block_given?
+			self.my_each { |obj| return true if obj }
+			return false
+		end
+		self.my_each { |obj| return true if yield obj}
+		return false
+	end
+
 end
 
 my_array = [1,2,3,4,5,6,7,8,9,10]
+my_array2 = [false, nil, false]
 
 puts "my_each"
 my_array.my_each { |num| print "#{num} "}
@@ -57,3 +67,12 @@ puts "my_all?"
 print my_array.my_all? { |obj| obj.is_a? Integer}
 puts
 print my_array.my_all? { |obj| obj % 2 == 0}
+puts
+puts
+puts "my_any?"
+print my_array.my_any?
+puts
+print my_array2.my_any?
+puts
+puts my_array.my_any? { |obj| obj % 2 == 0}
+puts my_array.my_any? { |obj| obj == 11 }
