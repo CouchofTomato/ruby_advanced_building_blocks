@@ -49,6 +49,8 @@ module Enumerable
 			self.my_each{ |obj| return false if obj}
 			return true
 		end
+		self.my_each { |obj| return false unless yield obj}
+		return true
 	end
 
 end
@@ -86,5 +88,11 @@ puts my_array.my_any? { |obj| obj == 11 }
 puts
 puts "my_none?"
 print my_array.my_none?
+puts
+print my_array2.my_none?
+puts
+print my_array.my_none? { |obj| obj % 2 == 0}
+puts
+print my_array.my_none? { |obj| obj.is_a? Integer}
 puts
 print my_array2.my_none?
