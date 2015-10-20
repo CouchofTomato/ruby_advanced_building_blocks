@@ -66,7 +66,13 @@ module Enumerable
 	end
 
 	def my_map
-
+		return enum_for(:each) unless block_given?
+		return_array = []
+		self.my_each do |obj|
+			val = yield obj
+			return_array << val
+		end
+		return_array
 	end
 
 end
@@ -120,3 +126,7 @@ puts
 print my_array.my_count(2)
 puts
 print my_array.my_count { |obj| obj % 2 == 0 }
+puts
+puts
+puts "my_map"
+print my_array.my_map { |obj| obj * 2 }
