@@ -53,6 +53,22 @@ module Enumerable
 		return true
 	end
 
+	def my_count(input = nil)
+		count = 0
+		if block_given?
+			self.my_each { |obj| count += 1 if yield obj }
+		elsif input == nil
+			self.my_each { |obj| count += 1 }
+		else
+			self.my_each { |obj| count += 1 if obj == input}
+		end
+		count
+	end
+
+	def my_map
+
+	end
+
 end
 
 my_array = [1,2,3,4,5,6,7,8,9,10]
@@ -96,3 +112,11 @@ puts
 print my_array.my_none? { |obj| obj.is_a? Integer}
 puts
 print my_array2.my_none?
+puts
+puts
+puts "my_count"
+print my_array.my_count
+puts
+print my_array.my_count(2)
+puts
+print my_array.my_count { |obj| obj % 2 == 0 }
