@@ -75,9 +75,20 @@ module Enumerable
 		return_array
 	end
 
+	def my_inject(input = nil)
+		if input == nil
+			sum = self[0]
+			self.my_each do |obj|
+				next if obj.eql?(self[0])
+				sum = yield sum, obj
+			end
+		end
+		sum
+	end
+
 end
 
-my_array = [1,2,3,4,5,6,7,8,9,10]
+my_array = [1,2,3,4,5,6,7,8,9,10,1,1]
 my_array2 = [false, nil, false]
 
 puts "my_each"
@@ -130,3 +141,9 @@ puts
 puts
 puts "my_map"
 print my_array.my_map { |obj| obj * 2 }
+puts
+puts
+puts "my_inject"
+print my_array.my_inject { |sum, obj| sum + obj }
+puts
+print my_array.inject { |sum, obj| sum + obj }
