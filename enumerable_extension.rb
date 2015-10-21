@@ -78,8 +78,9 @@ module Enumerable
 	def my_inject(input = nil)
 		if input == nil
 			sum = self[0]
-			self.my_each do |obj|
-				next if obj.eql?(self[0])
+			new_array = self.clone
+			new_array.shift
+			new_array.my_each do |obj|
 				sum = yield sum, obj
 			end
 		end
