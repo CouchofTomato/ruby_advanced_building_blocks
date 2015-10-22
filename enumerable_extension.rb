@@ -83,6 +83,11 @@ module Enumerable
 			new_array.my_each do |obj|
 				sum = yield sum, obj
 			end
+		else
+			sum = input
+			self.my_each do |obj|
+				sum = yield sum, obj
+			end
 		end
 		sum
 	end
@@ -148,3 +153,7 @@ puts "my_inject"
 print my_array.my_inject { |sum, obj| sum + obj }
 puts
 print my_array.inject { |sum, obj| sum + obj }
+puts
+print my_array.my_inject(2) { |sum, obj| sum + obj }
+puts
+print my_array.inject(2) { |sum, obj| sum + obj }
