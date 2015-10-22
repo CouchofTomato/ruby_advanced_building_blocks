@@ -85,6 +85,26 @@ module Enumerable
 		return_array
 	end
 
+	#my_map method 3 taking a Proc or a Block
+	def my_map3(input = nil)
+		if input && block_given?
+			return_array = []
+			self.my_each do |obj|
+				val = input.call(yield obj)
+				return_array << val
+			end
+		elsif input
+			return_array = []
+			self.my_each do |obj|
+				val = input.call(obj)
+				return_array << val
+			end
+		else
+			return self
+		end
+		return_array
+	end
+
 	def my_inject(input = nil)
 		if input == nil
 			sum = self[0]
@@ -107,75 +127,3 @@ end
 def multiply_els(input)
 	input.my_inject { |sum, obj| sum * obj}
 end
-
-my_array = [1,2,3,4,5,6,7,8,9,10,1,1]
-my_array2 = [false, nil, false]
-
-puts "my_each"
-my_array.my_each { |num| print "#{num} "}
-puts
-puts
-puts "my_each_with_index"
-my_array.my_each_with_index { |num, idx| print "#{idx}: #{num} -- "}
-puts
-puts
-puts "my_select"
-print my_array.my_select { |num| num % 2 == 0}
-puts
-p my_array.my_select
-puts
-puts
-puts "my_all?"
-print my_array.my_all? { |obj| obj.is_a? Integer}
-puts
-print my_array.my_all? { |obj| obj % 2 == 0}
-puts
-puts
-puts "my_any?"
-print my_array.my_any?
-puts
-print my_array2.my_any?
-puts
-puts my_array.my_any? { |obj| obj % 2 == 0}
-puts my_array.my_any? { |obj| obj == 11 }
-puts
-puts "my_none?"
-print my_array.my_none?
-puts
-print my_array2.my_none?
-puts
-print my_array.my_none? { |obj| obj % 2 == 0}
-puts
-print my_array.my_none? { |obj| obj.is_a? Integer}
-puts
-print my_array2.my_none?
-puts
-puts
-puts "my_count"
-print my_array.my_count
-puts
-print my_array.my_count(2)
-puts
-print my_array.my_count { |obj| obj % 2 == 0 }
-puts
-puts
-puts "my_map"
-print my_array.my_map { |obj| obj * 2 }
-puts
-puts
-puts "my_inject"
-print my_array.my_inject { |sum, obj| sum + obj }
-puts
-print my_array.inject { |sum, obj| sum + obj }
-puts
-print my_array.my_inject(2) { |sum, obj| sum + obj }
-puts
-print my_array.inject(2) { |sum, obj| sum + obj }
-puts
-puts
-print multiply_els([2,4,5])
-puts
-puts
-puts "my_map 2"
-my_proc = Proc.new { |obj| obj * 2 }
-print my_array.my_map2(my_proc)
