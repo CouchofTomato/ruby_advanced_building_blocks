@@ -75,6 +75,16 @@ module Enumerable
 		return_array
 	end
 
+	#my_map method 2 taking a Proc instead of a Block
+	def my_map2(input)
+		return_array = []
+		self.my_each do |obj|
+			val = input.call(obj)
+			return_array << val
+		end
+		return_array
+	end
+
 	def my_inject(input = nil)
 		if input == nil
 			sum = self[0]
@@ -92,6 +102,10 @@ module Enumerable
 		sum
 	end
 
+end
+
+def multiply_els(input)
+	input.my_inject { |sum, obj| sum * obj}
 end
 
 my_array = [1,2,3,4,5,6,7,8,9,10,1,1]
@@ -157,3 +171,11 @@ puts
 print my_array.my_inject(2) { |sum, obj| sum + obj }
 puts
 print my_array.inject(2) { |sum, obj| sum + obj }
+puts
+puts
+print multiply_els([2,4,5])
+puts
+puts
+puts "my_map 2"
+my_proc = Proc.new { |obj| obj * 2 }
+print my_array.my_map2(my_proc)
